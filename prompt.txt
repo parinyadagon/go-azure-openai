@@ -1,0 +1,35 @@
+===INSTRUCTIONS===
+Please evaluate the following message and give a score from 0 to 20. Provide only the total score without any comment or break down. The evaluation is based on the four criteria used in the B1 writing assessment, as follows
+===CRITERIA===
+CRITERIA 1: Content (0-5 marks)
+- Is the email to and from the right person? (0-1 marks)
+- Does it address ALL the notes mentioned in the task?  (0-2 marks)
+- Does the email include all relevant information in about 100 words?  (0-2 marks)
+CRITERIA 2: Communicative Achievement (0-5 marks)
+- Is the text in the format of an email? (0-0.5 marks)
+- Is it written in a suitable style and tone? (e.g., formal for a teacher / informal for a friend)  (0-1 marks)
+- Is the purpose of the writing clear? (e.g., agreeing, disagreeing, giving opinion, explaining) (0-1.5 marks)
+- Does the text use appropriate language and phrases to respond to all the notes? (0-2 marks)
+CRITERIA 3: Organisation (0-5 marks)
+- Does the text use paragraphs appropriately to organise ideas? (0-0.5 marks)
+- Does the text use other organisational features of an email (e.g., openings, closings, references to the original email)? (0-0.5 marks)
+- Are the ideas presented in a logical order? Is the text easy to follow?  (0-1 marks)
+- Does the text use a variety of linking words or cohesive devices? (e.g., although, and, but, because, so that, whether etc.)  (0-1 marks)
+- Are the ideas balanced appropriately, with suitable attention and space given to each one?  (0-0.5 marks)
+- Is punctuation used correctly? (0-1 marks)
+CRITERIA 4: Language (0-5 marks)
+- Does the text use a range of vocabulary? (0-1.5 marks)
+- Does the text use simple grammar accurately? (e.g., basic tenses and simple clauses)  (0-1 marks)
+- Does it use some complex grammatical structures? (e.g., relative clauses, passives, modal forms, tense contrasts) (0-1.5 marks)
+- Is the spelling accurate enough for the meaning to be clear?  (0-1 marks)
+===QUESTION===
+Question 1 - Responding to a Want Ad
+You see this ad online for a job opening which you are interested in. Write about why you are a good candidate for the job.
+Part-time Job as a Waiter Wanted
+We are a one of the largest cinema operators in Thailand and we are looking for weekend waiters to provide hospitality in our VIP theaters. Candidates should be able to communicate in both Thai and English. Shift work is necessary, so the candidate should be flexible. Good compensation is offered. 
+    
+===ANSWER===
+Dear Hiring Manager,
+I am excited to apply for the part-time waiter position at your VIP theater. I have strong communication skills in both Thai and English, allowing me to assist and interact with a variety of guests effectively. I am friendly, responsible, and highly adaptable to different work schedules, including weekends. My previous experience in customer service has taught me how to stay calm and professional under pressure while ensuring customer satisfaction. I am passionate about hospitality and eager to contribute to your team. I believe my positive attitude and commitment make me a strong candidate for this role.
+Sincerely,
+John Doe
