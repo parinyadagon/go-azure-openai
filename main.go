@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"log"
 
@@ -15,10 +16,20 @@ func main() {
 		log.Fatalf("init agent: %v", err)
 	}
 	ctx := context.Background()
-	reply, err := a.Chat(ctx, "แต่งกลอนเกี่ยวกับความรัก 4 บท", agent.WithTemperature(0.8))
+	// Example: request a structured JSON output
+	schema := `{"poems":[{"stanza":"string"}]}`
+	res, parsed, err := a.ChatStructuredJSON(ctx, "แต่งกลอนเกี่ยวกับความรัก 4 บท และส่งออกเป็น JSON ตาม schema", agent.WithTemperature(0.8), agent.WithOutputSchema(schema))
 	if err != nil {
+		// If parsing failed, err may be json.Unmarshal error; still print raw structured result
 		log.Fatalf("chat: %v", err)
 	}
-	fmt.Println("--- Reply ---")
-	fmt.Println(reply)
+
+	out, _ := json.MarshalIndent(res, "", "  ")
+	fmt.Println("--- Reply (structured) ---")
+	fmt.Println(string(out))
+	if parsed != nil {
+		p, _ := json.MarshalIndent(parsed, "", "  ")
+		fmt.Println("--- Parsed JSON ---")
+		fmt.Println(string(p))
+	}
 }
