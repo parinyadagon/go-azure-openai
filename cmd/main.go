@@ -1,25 +1,27 @@
 package main
 
 import (
-	"go-azure-openai/internal/app"
-	"go-azure-openai/internal/service/agent"
+	"go-azure-openai/internal/server"
 	"log"
 	"os"
+
+	"github.com/gofiber/fiber/v2"
 )
 
 func main() {
-	a, err := agent.NewAuto()
-	if err != nil {
-		log.Fatalf("init agent: %v", err)
-	}
-	// controller-provided JSON Schema (server-side)
-	schema, _ := agent.SchemaFromMap(map[string]string{"author.name": "text", "author.age": "int"})
-	appServer := app.NewServer(a, schema)
+	app := server.NewServer("AI-Service")
+
+	app.Get("/ai/chat", func(c *fiber.Ctx) error {
+		return c.JSON(fiber.Map{
+			"message": "Chat",
+		})
+	})
+
+	// ใช้ PORT จาก env ถ้าไม่มีให้ default เป็น 3000
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "8888"
+		port = "3000"
 	}
-	if err := appServer.Listen(":" + port); err != nil {
-		log.Fatalf("server error: %v", err)
-	}
+
+	log.Fatal(app.Listen(":" + port))
 }
