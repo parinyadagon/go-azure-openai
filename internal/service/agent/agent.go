@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"io"
 	"log"
 	"os"
 	"strconv"
@@ -541,79 +540,11 @@ func SchemaFromMap(props map[string]string) (string, error) {
 	return SchemaFromFields(props, nil)
 }
 
-// ChatStreamStructured streams token chunks and returns a structured result (aggregated text + minimal metadata).
-func (a *Agent) ChatStreamStructured(ctx context.Context, userPrompt string, handler StreamHandler, opts ...ChatOption) (ChatResult, error) {
-	var empty ChatResult
-	if a == nil || a.client == nil {
-		return empty, errors.New("agent not initialized")
-	}
-	if handler == nil {
-		return empty, errors.New("nil stream handler")
-	}
-	p := chatParams{temperature: 0.7}
-	for _, o := range opts {
-		o(&p)
-	}
-	msgs := make([]openai.ChatCompletionMessage, 0, 2)
-	if p.system != "" {
-		msgs = append(msgs, openai.ChatCompletionMessage{Role: openai.ChatMessageRoleSystem, Content: p.system})
-	}
-	msgs = append(msgs, openai.ChatCompletionMessage{Role: openai.ChatMessageRoleUser, Content: userPrompt})
-
-	req := openai.ChatCompletionRequest{Model: a.cfg.Model, Messages: msgs, Temperature: p.temperature, Stream: true}
-	if p.maxTokens > 0 {
-		req.MaxTokens = p.maxTokens
-	}
-	ctx, cancel := context.WithTimeout(ctx, a.cfg.Timeout)
-	defer cancel()
-	stream, err := a.client.CreateChatCompletionStream(ctx, req)
-	if err != nil {
-		return empty, err
-	}
-	defer stream.Close()
-	var full string
-	for {
-		chunk, err := stream.Recv()
-		if errors.Is(err, context.Canceled) {
-			return ChatResult{Text: full, Model: a.cfg.Model}, nil
-		}
-		if err != nil {
-			if errors.Is(err, io.EOF) {
-				break
-			}
-			return ChatResult{Text: full, Model: a.cfg.Model}, err
-		}
-		if len(chunk.Choices) == 0 {
-			continue
-		}
-		delta := chunk.Choices[0].Delta.Content
-		if delta == "" { // may carry role/done markers
-			continue
-		}
-		full += delta
-		if cont := handler(delta); !cont {
-			// stop early by canceling context
-			cancel()
-			break
-		}
-	}
-	return ChatResult{Text: full, Model: a.cfg.Model}, nil
-}
-
 // keep compatibility: original Chat returns text only using ChatStructured
 func (a *Agent) Chat(ctx context.Context, userPrompt string, opts ...ChatOption) (string, error) {
 	r, err := a.ChatStructured(ctx, userPrompt, opts...)
 	if err != nil {
 		return "", err
-	}
-	return r.Text, nil
-}
-
-// keep compatibility for ChatStream
-func (a *Agent) ChatStream(ctx context.Context, userPrompt string, handler StreamHandler, opts ...ChatOption) (string, error) {
-	r, err := a.ChatStreamStructured(ctx, userPrompt, handler, opts...)
-	if err != nil {
-		return r.Text, err
 	}
 	return r.Text, nil
 }
